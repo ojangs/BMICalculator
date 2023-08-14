@@ -19,25 +19,27 @@ class MainActivity : AppCompatActivity() {
 
     val myCoroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
+    val berat = binding.isiBerat.text.toString().toFloatOrNull()
+    val tinggi = binding.isiTinggi.text.toString().toFloatOrNull()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        binding.btnHitung.setOnClickListener(){
-            myCoroutineScope.launch {
-                getBmiIndex()
-                weightCategoryBMI()
+        if (berat != null && tinggi != null) {
+            binding.btnHitung.setOnClickListener() {
+                myCoroutineScope.launch {
+                    getBmiIndex()
+                    weightCategoryBMI()
+                }
             }
-        }
-
+        } else
+            binding.hasilHitung.text = "MOHON DIISI TERLEBIH DAHULU !"
     }
 
     private fun getBmiIndex(): Double{
-
-        val berat = binding.isiBerat.text.toString().toFloatOrNull()
-        val tinggi = binding.isiTinggi.text.toString().toFloatOrNull()
         var index = 0.0
 
         if (berat != null && tinggi != null){
